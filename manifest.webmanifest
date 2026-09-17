@@ -1,0 +1,17 @@
+{
+  "name": "Medico y Cirujano · Dr. Héctor Patarroyo",
+  "short_name": "Consulta",
+  "description": "Informe de consulta, recetas en PDF e historial de pacientes.",
+  "lang": "es-CO",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef2f1",
+  "theme_color": "#1f5f56",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
