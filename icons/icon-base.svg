@@ -1,0 +1,18 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo -->
+  <rect width="512" height="512" fill="#1f5f56"/>
+  
+  <!-- Estetoscopio stylizado -->
+  <g transform="translate(256, 256)">
+    <!-- Tubos del estetoscopio -->
+    <path d="M -80 -60 Q -80 -20, -40 0 Q 0 20, 40 0 Q 80 -20, 80 -60" stroke="#eef2f1" stroke-width="28" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Diafragma (círculo grande abajo) -->
+    <circle cx="0" cy="100" r="50" fill="#eef2f1" stroke="#1f5f56" stroke-width="8"/>
+    <circle cx="0" cy="100" r="35" fill="none" stroke="#1f5f56" stroke-width="4"/>
+    
+    <!-- Auriculares -->
+    <circle cx="-45" cy="-70" r="18" fill="none" stroke="#eef2f1" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="45" cy="-70" r="18" fill="none" stroke="#eef2f1" stroke-width="12" stroke-linecap="round"/>
+  </g>
+</svg>
