@@ -812,13 +812,17 @@ details.consulta[open] summary .chev { transform: rotate(180deg); }
   <div class="card">
     <h2><span class="step">4</span> Mensaje para WhatsApp</h2>
     <div class="options" id="waOptions">
-      <label class="check"><input type="checkbox" data-sec="motivo" checked> Motivo</label>
-      <label class="check"><input type="checkbox" data-sec="antecedentes" checked> Antecedentes</label>
-      <label class="check"><input type="checkbox" data-sec="evolucion"> Evolución</label>
-      <label class="check"><input type="checkbox" data-sec="dx" checked> Diagnóstico</label>
-      <label class="check"><input type="checkbox" data-sec="plan" checked> Plan</label>
-      <label class="check"><input type="checkbox" data-sec="meds" checked> Medicamentos</label>
-    </div>
+  <!-- Agrega esta línea nueva aquí -->
+  <label class="check"><input type="checkbox" data-sec="expediente" checked> Expediente</label>
+  
+  <!-- Lo que ya tenías: -->
+  <label class="check"><input type="checkbox" data-sec="motivo" checked> Motivo</label>
+  <label class="check"><input type="checkbox" data-sec="antecedentes" checked> Antecedentes</label>
+  <label class="check"><input type="checkbox" data-sec="evolucion"> Evolución</label>
+  <label class="check"><input type="checkbox" data-sec="dx" checked> Diagnóstico</label>
+  <label class="check"><input type="checkbox" data-sec="plan" checked> Plan</label>
+  <label class="check"><input type="checkbox" data-sec="meds" checked> Medicamentos</label>
+</div>
     <div class="wa-preview" id="waPreview" aria-live="polite"></div>
     <div class="card-actions">
       <button type="button" class="btn btn-ghost" id="btnCopy">Copiar mensaje</button>
@@ -2205,10 +2209,21 @@ function seccionesWA() {
 function construirResumen(datos) {
   const sec = seccionesWA();
   const L = [];
+  
+  // Capturamos el expediente directamente desde el campo de texto
+  const expedienteVal = document.getElementById("expediente").value.trim();
+
   L.push("*Resumen de consulta*");
   L.push(`Dr. ${MEDICO.nombre} · Medicina Biológica y Acupuntura`);
   L.push(`Fecha: ${fechaCorta(datos.fecha)}`);
   L.push("");
+  
+  // --- NUEVA LÍNEA: Agregamos el Expediente si el checkbox está marcado ---
+  if (sec.expediente && expedienteVal) {
+    L.push(`*Expediente:* ${expedienteVal}`);
+  }
+  // ------------------------------------------------------------------------
+
   L.push(`*Paciente:* ${datos.paciente || "—"}`);
   if (sec.motivo && datos.motivo)       L.push("", "*Motivo de consulta:*", datos.motivo);
   if (sec.antecedentes && datos.antecedentes) L.push("", "*Antecedentes:*", datos.antecedentes);
@@ -2223,7 +2238,7 @@ function construirResumen(datos) {
     L.push("", "*Medicamentos:*");
     meds.forEach((m, i) => {
       L.push(`${i + 1}. ${m.nombre}${m.dosis ? " — " + m.dosis : ""}`);
-      if (m.indicaciones) L.push(`   _${m.indicaciones.replace(/\n+/g, " ")}_`);
+      if (m.indicaciones) L.push(`    _${m.indicaciones.replace(/\n+/g, " ")}_`);
     });
   }
   return L.join("\n");
@@ -2712,6 +2727,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   actualizarPendientes();
   if (habia && $("#paciente").value) toast("Se recuperó la consulta en curso");
 });
+
+  // --- NUEVA MEJORA: SALTO CON ENTER ---
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
+    event.preventDefault(); 
+    const focusableElements = Array.from(
+      document.querySelectorAll('input:not([type="hidden"]), select, textarea, button')
+    ).filter(el => !el.disabled && el.offsetParent !== null); 
+
+    const currentIndex = focusableElements.indexOf(event.target);
+    if (currentIndex > -1 && currentIndex < focusableElements.length - 1) {
+      focusableElements[currentIndex + 1].focus();
+    }
+  }
+});
+// 
 </script>
 </body>
 </html>
